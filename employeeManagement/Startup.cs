@@ -40,7 +40,7 @@ namespace employeeManagement
 			//app.UseMvcWithDefaultRoute();
 			app.UseMvc(routes =>
 			{
-			routes.MapRoute("default", "{controller=home}/{action=index}/{id?}");
+			routes.MapRoute("default", "niu/{controller=home}/{action=index}/{id?}");
 			});
 			//app.UseMvc();
 			app.Run(async (context) =>
