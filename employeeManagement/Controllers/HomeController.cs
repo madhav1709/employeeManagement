@@ -1,4 +1,5 @@
 ﻿using employeeManagement.Models;
+using employeeManagement.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace employeeManagement.Controllers
 {
+	//[Route("[controller]/[action]")]
 	public class HomeController : Controller
 
 	{
@@ -16,18 +18,33 @@ namespace employeeManagement.Controllers
 		{
 			_employeeRepository = employeeRepository;
 		}
-		public string Index()
+
+		//[Route("")]
+		//[Route("~/")]
+		
+		public ViewResult Index()
 		{
-			return _employeeRepository.GetEmployee(1).Name;
+			var model =  _employeeRepository.GetAllEmployee();
+			return View(model);
 		}
-		public ViewResult Details()
+
+		//[Route("{id?}")]
+		public ViewResult Details(int? id)
 		{
-			Employee model = _employeeRepository.GetEmployee(1);
+			HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
+			{
+				Employee = _employeeRepository.GetEmployee(id??1),
+				PageTitle = "Employee Details"
+				
+
+			};
+
+			//Employee model = _employeeRepository.GetEmployee(1);
 			//ViewData["Employee"] = model;
 			//ViewData["Page Title"] = "Details of employee";
-			ViewBag.Employee = model;
-			ViewBag.PageTitle = "Details of employee";
-			return View(model);
+			//ViewBag.Employee = model;
+			//ViewBag.PageTitle = "Details of employee";
+			return View(homeDetailsViewModel);
 
 		}
 	}
